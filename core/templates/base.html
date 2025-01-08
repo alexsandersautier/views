@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <title>CRUD by Sautier Alexsander</title>
+    <style>
+        .links{
+            list-style: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        h2{
+            text-align: center;
+        }
+        .link_container{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="text-align: center;">CRUD By Dev Sautier Alexsander</h1>
+        <div class="link_container">
+            {%if user.is_authenticated %}
+            <h2>Olá, {{ user.username }}</h2>
+            {% else %}
+            <h2>Faça login</h2>
+            {% endif %}
+            <ul class="links">
+                <li><a href="{% url 'people_list' %}">Inicio</a></li>
+                {%if user.is_authenticated %}
+                <li><a href="{% url 'people_new' %}">Cadastrar</a></li>
+                    {% if user.is_superuser %}
+                        <li><a href="{% url 'admin:index' %}" target="_blank">Painel</a></li>
+                    {% endif %}
+                <li><a href="{% url 'logout' %}">Sair</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}">Acessar</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer style="text-align: center;">
+        <a href="https://www.linkedin.com/in/alexsander-sautier-526678106/" target="_blank">&copy; Sautier Alexsander</a> 
+    </footer>
+</body>
+</html>

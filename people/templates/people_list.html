@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 20px auto;
+    }
+</style>
+<div>
+    <form method="GET" action="{% url 'people_list' %}">
+        <input type="text" name="search" placeholder="Buscar por nome...">
+        <button type="submit">Buscar</button>
+        <a href="{% url 'people_list' %}">Limpar</a>
+    </form>
+    <br>
+    <table border="1">
+        <caption>Cadastro de pessoas</caption>
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Sobrenome</th>
+                <th scope="col">Data de nascimento</th>
+                <th scope="col">Gênero</th>
+                <th scope="col">Foto</th>
+                <th scope="col">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for person in people %}
+                <tr>
+                    <td style="text-align: center;">{{person.name}}</td>
+                    <td style="text-align: center;">{{person.last_name}}</td>
+                    <td style="text-align: center;">{{person.birthdate}}</td>
+                    <td style="text-align: center;">{{person.gender}}</td>
+                    <td style="text-align: center;"><img src="{{person.photo.url}}" alt="profile photo" width="20" style="border-radius: 50px"></td>
+                    <td style="text-align: center;">
+                        <a href="{% url 'people_edit' id=person.id %}"><i class="bi bi-pencil"></i>
+                        </a> <a href="{% url 'people_delete' id=person.id %}"><i class="bi bi-trash"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
